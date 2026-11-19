@@ -1,0 +1,142 @@
+---
+layout: board
+title: 공고 작성
+---
+{% assign notice_repo = site.github.repository_nwo | default: site.notice_repository | default: 'bori121-stack/acro-bridge' %}
+<style>
+  .notice-editor { max-width: 47rem; margin: 0 auto; padding: 3rem 0 4rem; }
+  .notice-editor h1 { margin: 0 0 .6rem; font-size: clamp(1.8rem, 5vw, 2.5rem); line-height: 1.25; }
+  .notice-editor .writing-intro, .notice-editor .file-help { margin: 0 0 1.75rem; line-height: 1.7; }
+  .notice-editor label { display: block; margin: 1.25rem 0 .4rem; font-weight: 700; }
+  .notice-editor label span { font-weight: 400; }
+  .notice-editor input, .notice-editor textarea { box-sizing: border-box; width: 100%; min-height: 3rem; padding: .65rem .8rem; border: 1px solid #879b9d; border-radius: .35rem; color: #192f44; background: #fff; font: inherit; }
+  .notice-editor textarea { resize: vertical; line-height: 1.65; }
+  .notice-editor :focus-visible { outline: 3px solid #00876b; outline-offset: 3px; }
+  .notice-editor .actions { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 .8rem; }
+  .notice-editor button, .notice-editor .next-action { display: inline-block; padding: .7rem 1.05rem; min-height: 2.75rem; border: 1px solid #00664d; border-radius: .35rem; font: inherit; font-weight: 700; cursor: pointer; }
+  .notice-editor .primary, .notice-editor .next-action { background: #00664d; color: white; text-decoration: none; }
+  .notice-editor .secondary { background: white; color: #005c47; }
+  .notice-editor .file-help, .notice-editor .status { font-size: .95rem; }
+  .notice-editor .file-help a { text-underline-offset: .2em; }
+  .notice-editor .status:not(:empty) { margin: .8rem 0; padding: .85rem 1rem; background: #eff6f4; color: #163f35; overflow-wrap: anywhere; }
+  .notice-editor .next-action { margin-bottom: 1rem; }
+  .notice-editor [hidden] { display: none; }
+  @media (max-width: 36rem) { .notice-editor { padding: 2rem 0 3rem; } }
+</style>
+<main id="main" class="board-wrap">
+  <section class="notice-editor" aria-labelledby="write-title">
+    <h1 id="write-title">공고 작성</h1>
+    <p class="writing-intro">승인된 공고를 입력해 원고를 복사한 뒤 GitHub 작성 화면에 붙여넣으세요. 저장소에 쓰기 권한이 있는 담당자가 <strong>Commit changes</strong>로 저장하면 배포 후 전자공고 목록에 표시됩니다.</p>
+    <noscript><p>원고를 만들려면 브라우저에서 자바스크립트를 켜 주세요.</p></noscript>
+    <form id="notice-form" data-repository="{{ notice_repo | escape }}">
+      <label for="notice-title">공고 제목</label>
+      <input id="notice-title" type="text" required>
+      <label for="notice-body">공고 전문</label>
+      <textarea id="notice-body" rows="9" required></textarea>
+      <label for="notice-attachment">첨부 자료 주소 <span>(선택)</span></label>
+      <input id="notice-attachment" type="url" placeholder="https://" inputmode="url" aria-describedby="attachment-help">
+      <small id="attachment-help">열람자가 로그인 없이 열 수 있는 자료의 주소를 입력하세요.</small>
+      <div class="actions">
+        <button class="primary" type="submit" value="copy">원고 복사하기</button>
+        <button class="secondary" type="submit" value="download">파일로 내려받기</button>
+      </div>
+      <p id="notice-status" class="status" role="status" aria-live="polite"></p>
+      <a class="next-action" id="github-editor" target="_blank" rel="noopener noreferrer" hidden>GitHub 작성 화면 열기</a>
+      <p class="file-help">파일로 게시할 때는 내려받은 <b>.md</b> 파일을 <a href="https://github.com/{{ notice_repo | escape }}/upload/gh-pages/_posts" target="_blank" rel="noopener noreferrer">GitHub 공고 폴더에 업로드</a>하고 <b>Commit changes</b>로 저장하세요.</p>
+    </form>
+  </section>
+</main>
+<script>
+(() => {
+  'use strict';
+  const form = document.getElementById('notice-form');
+  const titleField = document.getElementById('notice-title');
+  const bodyField = document.getElementById('notice-body');
+  const attachmentField = document.getElementById('notice-attachment');
+  const status = document.getElementById('notice-status');
+  const editorLink = document.getElementById('github-editor');
+  let lastDraft;
+
+  function escapeContent(text) {
+    const substitutions = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '{': '&#123;', '}': '&#125;' };
+    return text.replace(/[&<>"'{}]/g, char => substitutions[char]);
+  }
+
+  function createPost() {
+    const title = titleField.value.trim();
+    const body = bodyField.value.trim();
+    if (!title || !body) {
+      const missing = !title ? titleField : bodyField;
+      missing.setCustomValidity(!title ? '공고 제목을 입력하세요.' : '공고 전문을 입력하세요.');
+      missing.reportValidity();
+      return null;
+    }
+
+    let attachment;
+    if (attachmentField.value.trim()) {
+      try { attachment = new URL(attachmentField.value.trim()); } catch { /* Validate below. */ }
+      if (!attachment || attachment.protocol !== 'https:' || attachment.username || attachment.password) {
+        attachmentField.setCustomValidity('https://로 시작하는 공개 자료 주소를 입력하세요.');
+        attachmentField.reportValidity();
+        return null;
+      }
+    }
+
+    const signature = JSON.stringify([title, body, attachment?.href]);
+    if (lastDraft && signature === lastDraft.signature) return lastDraft;
+
+    // Korea Standard Time is UTC+09:00 regardless of the user's device time zone.
+    const localTime = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 19);
+    const day = localTime.slice(0, 10);
+    const timestamp = localTime.replace('T', ' ') + ' +0900';
+    const filename = day + '-notice-' + crypto.randomUUID() + '.md';
+    const lines = [
+      '---', 'layout: notice', 'title: ' + JSON.stringify(title), 'date: ' + timestamp,
+      'render_with_liquid: false', '---', '',
+      '<div markdown="0" style="white-space: pre-wrap; overflow-wrap: anywhere;">' + escapeContent(body) + '</div>'
+    ];
+    if (attachment) {
+      lines.push('', '<p><a href="' + escapeContent(attachment.href) + '">첨부 자료 열기</a></p>');
+    }
+    lastDraft = { signature, filename, text: lines.join('\n') + '\n' };
+    return lastDraft;
+  }
+
+  function downloadPost(post) {
+    const objectUrl = URL.createObjectURL(new Blob([post.text], { type: 'text/markdown;charset=utf-8' }));
+    const anchor = document.createElement('a');
+    anchor.href = objectUrl;
+    anchor.download = post.filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+  }
+
+  form.addEventListener('input', event => {
+    event.target.setCustomValidity('');
+    editorLink.hidden = true;
+    status.textContent = '';
+  });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    editorLink.hidden = true;
+    const post = createPost();
+    if (!post) return;
+    if (event.submitter && event.submitter.value === 'download') {
+      downloadPost(post);
+      status.textContent = '공고 파일을 준비했습니다. 아래 업로드 링크에서 파일을 선택하고 저장하세요.';
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(post.text);
+      editorLink.href = 'https://github.com/' + form.dataset.repository + '/new/gh-pages/_posts?filename=' + encodeURIComponent(post.filename);
+      editorLink.hidden = false;
+      status.textContent = '원고를 복사했습니다. GitHub 작성 화면의 편집 칸에 붙여넣고 Commit changes를 누르세요.';
+      editorLink.focus();
+    } catch {
+      status.textContent = '클립보드에 복사할 수 없습니다. 파일로 내려받은 뒤 아래 업로드 링크를 이용해 주세요.';
+    }
+  });
+})();
+</script>

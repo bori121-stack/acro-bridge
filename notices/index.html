@@ -1,0 +1,26 @@
+---
+layout: board
+title: 전자공고
+permalink: /notices/
+---
+<main id="main" class="board-wrap" tabindex="-1">
+  <h1>전자공고</h1>
+  <div class="list-heading">
+    <h2>공고 목록</h2>
+    <a class="text-link" href="{{ '/notices/write/' | relative_url }}">관리자 글쓰기</a>
+  </div>
+  {% if site.posts.size > 0 %}
+  <ol class="notice-list" aria-label="최신순 공고">
+    {% for notice in site.posts %}
+    <li>
+      <a href="{{ notice.url | relative_url }}">
+        <span class="notice-title">{{ notice.title | escape }}</span>
+        <time datetime="{{ notice.date | date: '%Y-%m-%d' }}">{{ notice.date | date: '%Y.%m.%d' }}</time>
+      </a>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="empty-notices">현재 게시된 공고가 없습니다.</p>
+  {% endif %}
+</main>

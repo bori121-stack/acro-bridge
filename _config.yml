@@ -1,0 +1,7 @@
+title: ACRO Bridge
+lang: ko
+timezone: Asia/Seoul
+permalink: /notices/:year/:month/:day/:title/
+future: false
+exclude:
+  - README.md

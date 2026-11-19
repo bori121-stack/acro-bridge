@@ -1,116 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="주식회사 아크로 브릿지의 전자공고와 사업 영역을 확인하세요.">
-  <title>ACRO Bridge | 회사 소개 · 전자공고</title>
-  <style>
-    :root { color-scheme: light; --ink: #192f44; --muted: #526571; --green: #006c50; --rule: #dce4e3; }
-    * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: #fff; font: 1rem/1.6 Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; word-break: keep-all; overflow-wrap: anywhere; }
-    h1, h2, h3, p { margin: 0; }
-    a { color: inherit; text-underline-offset: .2em; }
-    a:focus-visible { outline: 3px solid #00896b; outline-offset: 4px; }
-    .wrap { width: min(1120px, calc(100% - 3rem)); margin-inline: auto; }
-    [id] { scroll-margin-top: 6rem; }
-    .skip { position: absolute; z-index: 5; left: .5rem; top: .5rem; transform: translateY(-160%); padding: .5rem 1rem; background: white; }
-    .skip:focus { transform: none; }
-    .top { position: sticky; top: 0; z-index: 3; background: #fff; border-bottom: 1px solid var(--rule); }
-    .bar, .nav, .foot { display: flex; align-items: center; }
-    .bar, .foot { justify-content: space-between; }
-    .bar { gap: .75rem; min-height: 4.3rem; }
-    .wordmark { font: 750 clamp(1.25rem, 3vw, 1.6rem)/1.2 Arial, sans-serif; letter-spacing: -.06em; white-space: nowrap; text-decoration: none; }
-    .wordmark span { color: var(--green); }
-    .nav { gap: clamp(.75rem, 4vw, 2.5rem); }
-    .nav a { padding: .5rem 0; font-weight: 650; font-size: .9375rem; text-decoration: none; }
-    .nav a:hover, .foot a:hover { text-decoration: underline; }
-    .nav .prominent { color: var(--green); border-bottom: 2px solid currentColor; }
-    .hero { isolation: isolate; position: relative; overflow: hidden; background: linear-gradient(110deg, #172b3c 16%, #193748 71%, #225150); color: white; }
-    .arch { pointer-events: none; position: absolute; z-index: -1; inset: 0 0 0 48%; opacity: .68; background: repeating-radial-gradient(ellipse 105% 180% at 108% 115%, transparent 0 11px, #72c7a6aa 12px, transparent 13px 22px); mask-image: linear-gradient(90deg, transparent, #000 50%); }
-    .hero .wrap { padding-block: clamp(2.5rem, 5vw, 4rem); }
-    .company { color: #a8decb; font-weight: 650; }
-    h1 { margin: .7rem 0 1rem; font-size: clamp(2rem, 4.5vw, 3.65rem); line-height: 1.16; letter-spacing: -.065em; }
-    .intro { max-width: 36rem; line-height: 1.75; color: #e2e9e9; }
-    .notice { padding-block: clamp(2rem, 4.8vw, 3.75rem); }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -.05em; line-height: 1.25; }
-    .notice-list { margin-top: 1.15rem; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); }
-    .empty { padding: 2.1rem 1rem; text-align: center; background: #f7faf9; color: var(--muted); }
-    .entry { padding-block: 1.4rem; overflow-wrap: anywhere; }
-    .entry + .entry { border-top: 1px solid var(--rule); }
-    .entry h3 { font-size: 1.25rem; }
-    .entry time { color: var(--muted); font-size: .9375rem; }
-    .entry p { margin-top: .65rem; }
-    .entry ~ .empty { display: none; }
-    .about { background: #f4f7f6; padding-block: clamp(2rem, 4vw, 3.2rem); }
-    .areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 1.5rem; }
-    .area { border-top: 1px solid #acbdb8; padding-top: 1rem; }
-    .area h3 { font-size: 1.125rem; color: var(--green); letter-spacing: -.015em; }
-    .area p { color: var(--muted); margin-top: .3rem; }
-    .foot { flex-wrap: wrap; gap: 1rem; padding-block: 1.75rem; color: var(--muted); font-size: .875rem; }
-    .foot strong { color: var(--ink); }
-    .foot a { font-weight: 650; }
-    @media (max-width: 42rem) {
-      .wrap { width: calc(100% - 2.5rem); }
-      .nav { gap: .85rem; }
-      .arch { inset-inline-start: 55%; opacity: .35; }
-      .areas { grid-template-columns: 1fr; gap: 1rem; }
-    }
-    @media (max-width: 23rem) { .wrap { width: calc(100% - 1.5rem); } .nav a { font-size: .875rem; } }
-    @media print { .top, .arch, .skip, .foot a { display: none; } .hero, .about, .empty { background: white; color: black; } .hero p, .company { color: black; } .hero .wrap, .notice, .about { padding-block: 1rem; } .areas { display: block; } }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACRO Bridge | 기업의 성장을 설계하다</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --primary-navy: #1A2E44;
+            --accent-green: #00A86B;
+            --soft-white: #F8F9FA;
+            --text-gray: #4A4A4A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Pretendard', sans-serif; }
+        body { background-color: var(--soft-white); color: var(--text-gray); line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Navigation */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 10%; background: #fff; position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-navy); }
+        .logo span { color: var(--accent-green); }
+        .nav-links { list-style: none; display: flex; gap: 30px; font-weight: 500; }
+        .nav-links li:hover { color: var(--accent-green); cursor: pointer; }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #2C3E50 100%);
+            height: 50vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: #fff; padding: 0 20px;
+        }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px; }
+        /* 추가된 아크로브릿지 문구 스타일 */
+        .hero-content .brand-name { font-size: 2.5rem; color: var(--accent-green); font-weight: 800; margin-bottom: 30px; display: block; }
+        
+        .hero-content p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px; word-break: keep-all; }
+        .btn-main {
+            background: var(--accent-green); color: #fff; padding: 15px 40px;
+            border-radius: 50px; font-weight: 600; font-size: 1.1rem;
+            transition: transform 0.3s; display: inline-block;
+        }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        /* Value Section */
+        .values { padding: 100px 10%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .value-card {
+            background: #fff; padding: 40px; border-radius: 20px; text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .value-card:hover { transform: translateY(-10px); }
+        .value-card h3 { color: var(--primary-navy); margin-bottom: 15px; font-size: 1.4rem; }
+        .icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+
+        /* Footer */
+        footer { background: #eee; padding: 40px 10%; text-align: left; font-size: 0.9rem; }
+        .footer-info { display: flex; justify-content: space-between; border-top: 1px solid #ccc; padding-top: 20px; }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content .brand-name { font-size: 1.8rem; }
+            .values { grid-template-columns: 1fr; }
+        }
+
+        /* Menu destinations use ordinary links and support bookmarks and browser history. */
+        a:focus-visible { outline: 3px solid #04704d; outline-offset: 4px; }
+        .hero a:focus-visible { outline-color: #fff; }
+        .nav-links a { display: inline-block; padding: 4px 0; }
+        .nav-links a[aria-current="page"] { color: #076146; box-shadow: inset 0 -2px #076146; }
+        .hero { height: auto; min-height: 50vh; padding-block: 2.5rem; }
+        .hero-content, .value-card p, .detail-page { word-break: keep-all; overflow-wrap: anywhere; }
+        .detail-page { display: none; width: min(860px, 88%); margin: 0 auto; padding: clamp(3rem,8vw,6rem) 0; min-height: 55vh; scroll-margin-top: 7rem; }
+        .detail-page:target { display: block; }
+        .detail-page:target ~ .home-content { display: none; }
+        .detail-page h1 { font-size: clamp(2rem,5vw,3rem); line-height: 1.25; color: var(--primary-navy); margin-bottom: 1.3rem; }
+        .detail-page p { max-width: 44rem; }
+        .detail-page .return { display: inline-block; margin-top: 2rem; text-decoration: underline; text-underline-offset: 3px; color: #076146; }
+        .program-list { display: grid; gap: 1.2rem; list-style: none; }
+        .program-list strong { display:block; color: var(--primary-navy); }
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; padding: .65rem 5%; column-gap: 1.5rem; }
+            .nav-links { gap: clamp(.7rem,3vw,1.25rem); flex-wrap: wrap; font-size: .94rem; }
+            .values { padding: 3rem 7%; gap: 1.2rem; }
+            .footer-info { flex-wrap: wrap; gap: .8rem 2rem; }
+        }
+        @media (max-width: 520px) {
+            nav { flex-direction: column; align-items: flex-start; gap: .25rem; }
+            .nav-links { width: 100%; justify-content: space-between; gap: .3rem; }
+            .nav-links a { padding: .45rem 0; }
+            .hero-content h1 { font-size: clamp(1.75rem,7vw,2.2rem); line-height: 1.3; }
+            .hero-content p { font-size: 1.06rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; }
+        }
+    </style>
 </head>
-<body id="top">
-  <a class="skip" href="#notices">전자공고 바로가기</a>
-  <header class="top">
-    <div class="wrap bar">
-      <a class="wordmark" href="#top" aria-label="ACRO Bridge 첫 화면">ACRO <span>Bridge</span></a>
-      <nav class="nav" aria-label="주요 메뉴">
-        <a href="#business">사업 영역</a>
-        <a class="prominent" href="#notices">전자공고</a>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <section class="hero" aria-labelledby="headline">
-      <div class="arch" aria-hidden="true"></div>
-      <div class="wrap">
-        <p class="company">주식회사 아크로 브릿지</p>
-        <h1 id="headline">스타트업의 내일을<br>오늘로 잇는 기술</h1>
-        <p class="intro">회계·세무 기반의 전략적 투자로 스타트업의 근본적인 체력을 키우는 Hybrid Accelerator</p>
-      </div>
-    </section>
-    <section class="wrap notice" id="notices" aria-labelledby="notice-title">
-      <h2 id="notice-title">전자공고</h2>
-      <div class="notice-list">
-        <!-- 공고 등록 방법
-          아래 article을 주석 밖으로 복사해 공고 목록의 맨 위에 넣습니다.
-          id와 제목 링크의 # 뒤 문자열을 같은 고유값으로 바꿉니다. 예전 공고의 id는 유지합니다.
-          승인된 제목, 실제 게시일, 공고 전문을 입력한 뒤 공개합니다. 필요한 경우 기간과 첨부 링크를 본문에 적습니다.
-          게시물 없이 보이는 안내 문구는 첫 공고를 등록하면 자동으로 숨겨집니다.
-          <article class="entry" id="notice-YYYYMMDD-01">
-            <h3><a href="#notice-YYYYMMDD-01">공고 제목</a></h3>
-            <time datetime="YYYY-MM-DD">YYYY년 MM월 DD일</time>
-            <p>공고 전문</p>
-          </article>
-        -->
-        <p class="empty">현재 게시된 공고가 없습니다.</p>
-      </div>
-    </section>
-    <section class="about" id="business" aria-labelledby="business-title">
-      <div class="wrap">
-        <h2 id="business-title">사업 영역</h2>
-        <div class="areas">
-          <section class="area"><h3 lang="en">Tax-Tech &amp; Finance</h3><p>정교한 컨설팅 및 리스크 관리를 통한 기업 가치 극대화</p></section>
-          <section class="area"><h3 lang="en">Acceleration Program</h3><p>초기 창업자를 위한 밀착 보육 및 후속 투자 유치 지원</p></section>
-          <section class="area"><h3 lang="en">Strategic Network</h3><p>각 분야 전문가 그룹 및 업계 리더들과의 강력한 파트너십 구축</p></section>
+<body>
+
+    <nav aria-label="주요 메뉴">
+        <a class="logo" href="./" aria-label="ACRO Bridge 홈">ACRO <span>Bridge</span></a>
+        <ul class="nav-links">
+            <li><a href="#about" lang="en">About</a></li>
+            <li><a href="#programs" lang="en">Programs</a></li>
+            <li><a href="#portfolio" lang="en">Portfolio</a></li>
+            <li><a href="#apply" lang="en">Apply</a></li>
+            <li><a href="./notices/" aria-label="Notice 전자공고" title="전자공고" lang="en">Notice</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="detail-page" id="about" aria-labelledby="about-title">
+            <h1 id="about-title" tabindex="-1">회사 소개</h1>
+            <p>주식회사 아크로 브릿지는 회계·세무 기반의 전략적 투자로 스타트업의 성장을 지원하는 하이브리드 액셀러레이터입니다.</p>
+            <a class="return" href="./">홈으로</a>
+        </section>
+        <section class="detail-page" id="programs" aria-labelledby="programs-title">
+            <h1 id="programs-title" tabindex="-1">프로그램</h1>
+            <ul class="program-list">
+                <li><strong lang="en">Tax-Tech &amp; Finance</strong>정교한 컨설팅 및 리스크 관리를 통한 기업 가치 극대화</li>
+                <li><strong lang="en">Acceleration Program</strong>초기 창업자를 위한 밀착 보육 및 후속 투자 유치 지원</li>
+                <li><strong lang="en">Strategic Network</strong>각 분야 전문가 그룹 및 업계 리더들과의 강력한 파트너십 구축</li>
+            </ul>
+            <a class="return" href="./">홈으로</a>
+        </section>
+        <section class="detail-page" id="portfolio" aria-labelledby="portfolio-title">
+            <h1 id="portfolio-title" tabindex="-1">포트폴리오</h1>
+            <p>현재 홈페이지에 공개된 포트폴리오가 없습니다.</p>
+            <a class="return" href="./">홈으로</a>
+        </section>
+        <section class="detail-page" id="apply" aria-labelledby="apply-title">
+            <h1 id="apply-title" tabindex="-1">투자 제안</h1>
+            <p>현재 홈페이지에는 투자 제안 접수 창구가 마련되어 있지 않습니다.</p>
+            <a class="return" href="./">홈으로</a>
+        </section>
+        <section class="detail-page" id="notices" aria-labelledby="notices-title">
+            <h1 id="notices-title" tabindex="-1">전자공고</h1>
+            <p><a href="./notices/" class="return">전자공고 게시판 열기</a></p>
+            <a class="return" href="./">홈으로</a>
+        </section>
+        <div class="home-content">
+    <header class="hero">
+        <div class="hero-content">
+            <h1>스타트업의 내일을 오늘로 잇는 기술</h1>
+            <span class="brand-name">ACRO Bridge</span>
+            <p>회계·세무 기반의 전략적 투자로 스타트업의 근본적인 체력을 키우는 Hybrid Accelerator</p>
+            <a href="#apply" class="btn-main">투자 제안하기</a>
         </div>
-      </div>
+    </header>
+
+    <section class="values">
+        <div class="value-card">
+            <span class="icon">📊</span>
+            <h3>Tax-Tech & Finance</h3>
+            <p>정교한 컨설팅 및 리스크 관리를 통한 기업 가치 극대화</p>
+        </div>
+        <div class="value-card">
+            <span class="icon">🚀</span>
+            <h3>Acceleration Program</h3>
+            <p>초기 창업자를 위한 밀착 보육 및 후속 투자 유치 지원</p>
+        </div>
+        <div class="value-card">
+            <span class="icon">🤝</span>
+            <h3>Strategic Network</h3>
+            <p>각 분야 전문가 그룹 및 업계 리더들과의 강력한 파트너십 구축</p>
+        </div>
     </section>
-  </main>
-  <footer class="wrap foot">
-    <div><strong>주식회사 아크로 브릿지</strong><br>대표이사 송정용</div>
-    <a href="#notices">전자공고</a>
-  </footer>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-info">
+            <div>
+                <strong>주식회사 아크로 브릿지</strong><br>
+                대표이사 송정용
+            </div>
+            <div>
+                <a href="./notices/" style="text-decoration: underline">전자공고</a><br>
+                © 2026 ACRO Bridge. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        const homeTitle = document.title;
+        function updateNavigation() {
+            const hash = window.location.hash;
+            if (hash === '#notices') {
+                window.location.replace('./notices/');
+                return;
+            }
+            if (hash === '#business') {
+                window.location.replace('#programs');
+                return;
+            }
+            const currentSection = document.getElementById(hash.slice(1));
+            const heading = currentSection?.matches('.detail-page') ? currentSection.querySelector('h1') : null;
+            for (const link of document.querySelectorAll('.nav-links a')) {
+                if (heading && link.hash === hash) link.setAttribute('aria-current', 'page');
+                else link.removeAttribute('aria-current');
+            }
+            document.title = heading ? heading.textContent + ' | ACRO Bridge' : homeTitle;
+            if (heading) heading.focus({ preventScroll: true });
+        }
+        window.addEventListener('hashchange', updateNavigation);
+        updateNavigation();
+    </script>
 </body>
 </html>

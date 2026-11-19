@@ -1,0 +1,14 @@
+---
+layout: board
+---
+<main id="main" class="board-wrap" tabindex="-1">
+  <a href="{{ '/notices/' | relative_url }}" class="text-link">전자공고 목록</a>
+  <article class="notice-detail">
+    <header>
+      <h1>{{ page.title | escape }}</h1>
+      <p class="published-date">게시일 <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%Y.%m.%d' }}</time></p>
+    </header>
+    <div class="notice-content">{{ content }}</div>
+  </article>
+  <a class="back-link" href="{{ '/notices/' | relative_url }}">목록으로 돌아가기</a>
+</main>
