@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="주식회사 아크로 브릿지의 전자공고와 사업 영역을 확인하세요.">
+  <title>ACRO Bridge | 회사 소개 · 전자공고</title>
+  <style>
+    :root { color-scheme: light; --ink: #192f44; --muted: #526571; --green: #006c50; --rule: #dce4e3; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: #fff; font: 1rem/1.6 Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; word-break: keep-all; overflow-wrap: anywhere; }
+    h1, h2, h3, p { margin: 0; }
+    a { color: inherit; text-underline-offset: .2em; }
+    a:focus-visible { outline: 3px solid #00896b; outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 3rem)); margin-inline: auto; }
+    [id] { scroll-margin-top: 6rem; }
+    .skip { position: absolute; z-index: 5; left: .5rem; top: .5rem; transform: translateY(-160%); padding: .5rem 1rem; background: white; }
+    .skip:focus { transform: none; }
+    .top { position: sticky; top: 0; z-index: 3; background: #fff; border-bottom: 1px solid var(--rule); }
+    .bar, .nav, .foot { display: flex; align-items: center; }
+    .bar, .foot { justify-content: space-between; }
+    .bar { gap: .75rem; min-height: 4.3rem; }
+    .wordmark { font: 750 clamp(1.25rem, 3vw, 1.6rem)/1.2 Arial, sans-serif; letter-spacing: -.06em; white-space: nowrap; text-decoration: none; }
+    .wordmark span { color: var(--green); }
+    .nav { gap: clamp(.75rem, 4vw, 2.5rem); }
+    .nav a { padding: .5rem 0; font-weight: 650; font-size: .9375rem; text-decoration: none; }
+    .nav a:hover, .foot a:hover { text-decoration: underline; }
+    .nav .prominent { color: var(--green); border-bottom: 2px solid currentColor; }
+    .hero { isolation: isolate; position: relative; overflow: hidden; background: linear-gradient(110deg, #172b3c 16%, #193748 71%, #225150); color: white; }
+    .arch { pointer-events: none; position: absolute; z-index: -1; inset: 0 0 0 48%; opacity: .68; background: repeating-radial-gradient(ellipse 105% 180% at 108% 115%, transparent 0 11px, #72c7a6aa 12px, transparent 13px 22px); mask-image: linear-gradient(90deg, transparent, #000 50%); }
+    .hero .wrap { padding-block: clamp(2.5rem, 5vw, 4rem); }
+    .company { color: #a8decb; font-weight: 650; }
+    h1 { margin: .7rem 0 1rem; font-size: clamp(2rem, 4.5vw, 3.65rem); line-height: 1.16; letter-spacing: -.065em; }
+    .intro { max-width: 36rem; line-height: 1.75; color: #e2e9e9; }
+    .notice { padding-block: clamp(2rem, 4.8vw, 3.75rem); }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); letter-spacing: -.05em; line-height: 1.25; }
+    .notice-list { margin-top: 1.15rem; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); }
+    .empty { padding: 2.1rem 1rem; text-align: center; background: #f7faf9; color: var(--muted); }
+    .entry { padding-block: 1.4rem; overflow-wrap: anywhere; }
+    .entry + .entry { border-top: 1px solid var(--rule); }
+    .entry h3 { font-size: 1.25rem; }
+    .entry time { color: var(--muted); font-size: .9375rem; }
+    .entry p { margin-top: .65rem; }
+    .entry ~ .empty { display: none; }
+    .about { background: #f4f7f6; padding-block: clamp(2rem, 4vw, 3.2rem); }
+    .areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 1.5rem; }
+    .area { border-top: 1px solid #acbdb8; padding-top: 1rem; }
+    .area h3 { font-size: 1.125rem; color: var(--green); letter-spacing: -.015em; }
+    .area p { color: var(--muted); margin-top: .3rem; }
+    .foot { flex-wrap: wrap; gap: 1rem; padding-block: 1.75rem; color: var(--muted); font-size: .875rem; }
+    .foot strong { color: var(--ink); }
+    .foot a { font-weight: 650; }
+    @media (max-width: 42rem) {
+      .wrap { width: calc(100% - 2.5rem); }
+      .nav { gap: .85rem; }
+      .arch { inset-inline-start: 55%; opacity: .35; }
+      .areas { grid-template-columns: 1fr; gap: 1rem; }
+    }
+    @media (max-width: 23rem) { .wrap { width: calc(100% - 1.5rem); } .nav a { font-size: .875rem; } }
+    @media print { .top, .arch, .skip, .foot a { display: none; } .hero, .about, .empty { background: white; color: black; } .hero p, .company { color: black; } .hero .wrap, .notice, .about { padding-block: 1rem; } .areas { display: block; } }
+  </style>
+</head>
+<body id="top">
+  <a class="skip" href="#notices">전자공고 바로가기</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="wordmark" href="#top" aria-label="ACRO Bridge 첫 화면">ACRO <span>Bridge</span></a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="#business">사업 영역</a>
+        <a class="prominent" href="#notices">전자공고</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="headline">
+      <div class="arch" aria-hidden="true"></div>
+      <div class="wrap">
+        <p class="company">주식회사 아크로 브릿지</p>
+        <h1 id="headline">스타트업의 내일을<br>오늘로 잇는 기술</h1>
+        <p class="intro">회계·세무 기반의 전략적 투자로 스타트업의 근본적인 체력을 키우는 Hybrid Accelerator</p>
+      </div>
+    </section>
+    <section class="wrap notice" id="notices" aria-labelledby="notice-title">
+      <h2 id="notice-title">전자공고</h2>
+      <div class="notice-list">
+        <!-- 공고 등록 방법
+          아래 article을 주석 밖으로 복사해 공고 목록의 맨 위에 넣습니다.
+          id와 제목 링크의 # 뒤 문자열을 같은 고유값으로 바꿉니다. 예전 공고의 id는 유지합니다.
+          승인된 제목, 실제 게시일, 공고 전문을 입력한 뒤 공개합니다. 필요한 경우 기간과 첨부 링크를 본문에 적습니다.
+          게시물 없이 보이는 안내 문구는 첫 공고를 등록하면 자동으로 숨겨집니다.
+          <article class="entry" id="notice-YYYYMMDD-01">
+            <h3><a href="#notice-YYYYMMDD-01">공고 제목</a></h3>
+            <time datetime="YYYY-MM-DD">YYYY년 MM월 DD일</time>
+            <p>공고 전문</p>
+          </article>
+        -->
+        <p class="empty">현재 게시된 공고가 없습니다.</p>
+      </div>
+    </section>
+    <section class="about" id="business" aria-labelledby="business-title">
+      <div class="wrap">
+        <h2 id="business-title">사업 영역</h2>
+        <div class="areas">
+          <section class="area"><h3 lang="en">Tax-Tech &amp; Finance</h3><p>정교한 컨설팅 및 리스크 관리를 통한 기업 가치 극대화</p></section>
+          <section class="area"><h3 lang="en">Acceleration Program</h3><p>초기 창업자를 위한 밀착 보육 및 후속 투자 유치 지원</p></section>
+          <section class="area"><h3 lang="en">Strategic Network</h3><p>각 분야 전문가 그룹 및 업계 리더들과의 강력한 파트너십 구축</p></section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap foot">
+    <div><strong>주식회사 아크로 브릿지</strong><br>대표이사 송정용</div>
+    <a href="#notices">전자공고</a>
+  </footer>
+</body>
+</html>
